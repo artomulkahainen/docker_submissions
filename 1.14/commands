@@ -1,0 +1,232 @@
+BACKEND:
+
+arto@linux-arto:~/Desktop/Koodaukset/docker/docker_submissions/1.14/backend$ docker build -t backend .
+Sending build context to Docker daemon  49.15kB
+Step 1/8 : FROM golang:1.16-alpine
+1.16-alpine: Pulling from library/golang
+59bf1c3509f3: Pull complete 
+666ba61612fd: Pull complete 
+8ed8ca486205: Pull complete 
+fa6e261410ce: Pull complete 
+033ff68f5bd2: Pull complete 
+Digest: sha256:c4b36cff558405c8368be606325261a21a9a3ae9f79dc1bd3fff9f831a0411f2
+Status: Downloaded newer image for golang:1.16-alpine
+ ---> 4bcb0d501de3
+Step 2/8 : WORKDIR /app
+ ---> Running in f94fb53b1b22
+Removing intermediate container f94fb53b1b22
+ ---> f497154d6297
+Step 3/8 : COPY . .
+ ---> 7261161b5720
+Step 4/8 : RUN go build
+ ---> Running in 27898d2e4bca
+go: downloading github.com/gin-contrib/cors v1.3.1
+go: downloading github.com/gin-gonic/gin v1.6.3
+go: downloading github.com/go-redis/redis/v8 v8.4.2
+go: downloading github.com/go-pg/pg/v10 v10.7.3
+go: downloading github.com/mattn/go-isatty v0.0.12
+go: downloading github.com/gin-contrib/sse v0.1.0
+go: downloading github.com/ugorji/go v1.1.7
+go: downloading gopkg.in/yaml.v2 v2.3.0
+go: downloading github.com/golang/protobuf v1.4.3
+go: downloading github.com/go-playground/validator/v10 v10.2.0
+go: downloading github.com/ugorji/go/codec v1.1.7
+go: downloading golang.org/x/sys v0.0.0-20201119102817-f84b799fce68
+go: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+go: downloading github.com/cespare/xxhash/v2 v2.1.1
+go: downloading go.opentelemetry.io/otel v0.14.0
+go: downloading mellium.im/sasl v0.2.1
+go: downloading github.com/go-pg/zerochecker v0.2.0
+go: downloading github.com/jinzhu/inflection v1.0.0
+go: downloading github.com/vmihailenco/msgpack/v5 v5.0.0
+go: downloading github.com/vmihailenco/tagparser v0.1.2
+go: downloading github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc
+go: downloading github.com/vmihailenco/bufpool v0.1.11
+go: downloading github.com/go-playground/universal-translator v0.17.0
+go: downloading github.com/leodido/go-urn v1.2.0
+go: downloading google.golang.org/protobuf v1.25.0
+go: downloading golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9
+go: downloading github.com/go-playground/locales v0.13.0
+Removing intermediate container 27898d2e4bca
+ ---> c5394390a633
+Step 5/8 : ENV PORT=8080
+ ---> Running in 67483c53bb09
+Removing intermediate container 67483c53bb09
+ ---> d394fe1bc413
+Step 6/8 : ENV REQUEST_ORIGIN=http://localhost:5000
+ ---> Running in ec9f802c836b
+Removing intermediate container ec9f802c836b
+ ---> 08abda2c342f
+Step 7/8 : EXPOSE 8080
+ ---> Running in d569fa974a3d
+Removing intermediate container d569fa974a3d
+ ---> f98bdab642c6
+Step 8/8 : CMD ./server
+ ---> Running in ba74b267e512
+Removing intermediate container ba74b267e512
+ ---> 4a9af7e49e92
+Successfully built 4a9af7e49e92
+Successfully tagged backend:latest
+
+arto@linux-arto:~/Desktop/Koodaukset/docker/docker_submissions/1.14/backend$ docker run -p 8080:8080 backend
+[Ex 2.4+] REDIS_HOST env was not passed so redis connection is not initialized
+[Ex 2.6+] POSTGRES_HOST env was not passed so postgres connection is not initialized
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /ping                     --> server/router.pingpong (4 handlers)
+[GIN-debug] GET    /messages                 --> server/controller.GetMessages (4 handlers)
+[GIN-debug] POST   /messages                 --> server/controller.CreateMessage (4 handlers)
+[GIN-debug] Listening and serving HTTP on :8080
+
+
+
+
+FRONTEND:
+
+arto@linux-arto:~/Desktop/Koodaukset/docker/docker_submissions/1.14/frontend$ docker build -t frontend .
+Sending build context to Docker daemon  736.8kB
+Step 1/9 : FROM node:16
+16: Pulling from library/node
+a024302f8a01: Pull complete 
+289773030fdc: Pull complete 
+81bb8b3399fe: Pull complete 
+9c63da771697: Pull complete 
+bcf1b23b1e4b: Pull complete 
+53a5e10666cb: Pull complete 
+32143206e3f8: Pull complete 
+72ad9aab2e11: Pull complete 
+18175fdf07cd: Pull complete 
+Digest: sha256:2033f4cc18f9d8b5d0baa7f276aaeffd202e1a2c6fe9af408af05a34fe68cbfb
+Status: Downloaded newer image for node:16
+ ---> 304de6a23023
+Step 2/9 : WORKDIR /usr/app/src
+ ---> Running in fb868af0ba82
+Removing intermediate container fb868af0ba82
+ ---> 8549ae2cc91c
+Step 3/9 : COPY . .
+ ---> 364537018df2
+Step 4/9 : RUN npm install
+ ---> Running in 3ae260c65522
+npm WARN old lockfile 
+npm WARN old lockfile The package-lock.json file was created with an old version of npm,
+npm WARN old lockfile so supplemental metadata must be fetched from the registry.
+npm WARN old lockfile 
+npm WARN old lockfile This is a one-time fix-up, please be patient...
+npm WARN old lockfile 
+npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+npm WARN deprecated source-map-url@0.4.0: See https://github.com/lydell/source-map-url#deprecated
+npm WARN deprecated sane@4.1.0: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+npm WARN deprecated request-promise-native@1.0.9: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
+npm WARN deprecated rollup-plugin-babel@4.4.0: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-babel.
+npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+npm WARN deprecated babel-eslint@10.1.0: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+npm WARN deprecated axios@0.21.0: Critical security vulnerability fixed in v0.21.1. For more information, see https://github.com/axios/axios/pull/3410
+npm WARN deprecated @hapi/topo@3.1.6: This version has been deprecated and is no longer supported or maintained
+npm WARN deprecated @hapi/bourne@1.3.2: This version has been deprecated and is no longer supported or maintained
+npm WARN deprecated @hapi/hoek@8.5.1: This version has been deprecated and is no longer supported or maintained
+npm WARN deprecated @hapi/address@2.1.4: Moved to 'npm install @sideway/address'
+npm WARN deprecated @hapi/joi@15.1.1: Switch to 'npm install joi'
+npm WARN deprecated @material-ui/core@4.11.2: You can now upgrade to @mui/material. See the guide: https://mui.com/guides/migration-v4/
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated core-js@2.6.12: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+
+added 1943 packages, and audited 1944 packages in 42s
+
+125 packages are looking for funding
+  run `npm fund` for details
+
+125 vulnerabilities (106 moderate, 18 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm notice 
+npm notice New minor version of npm available! 8.1.2 -> 8.4.1
+npm notice Changelog: <https://github.com/npm/cli/releases/tag/v8.4.1>
+npm notice Run `npm install -g npm@8.4.1` to update!
+npm notice 
+Removing intermediate container 3ae260c65522
+ ---> 8c46b3b6f603
+Step 5/9 : RUN npm install -g serve
+ ---> Running in f56b714d3c2c
+
+added 93 packages, and audited 94 packages in 2s
+
+10 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Removing intermediate container f56b714d3c2c
+ ---> 8a11a3a1957c
+Step 6/9 : ENV REACT_APP_BACKEND_URL=http://localhost:8080
+ ---> Running in 106e1490c7da
+Removing intermediate container 106e1490c7da
+ ---> 34fb82d77daa
+Step 7/9 : EXPOSE 5000
+ ---> Running in 6ed8b5cf1824
+Removing intermediate container 6ed8b5cf1824
+ ---> bcb7225e7794
+Step 8/9 : RUN npm run build
+ ---> Running in f51c0e2590bf
+
+> example-frontend@0.1.0 build
+> react-scripts build
+
+(node:27) [DEP0148] DeprecationWarning: Use of deprecated folder mapping "./" in the "exports" field module resolution of the package at /usr/app/src/node_modules/postcss-safe-parser/node_modules/postcss/package.json.
+Update this package.json to use a subpath pattern like "./*".
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Creating an optimized production build...
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+Compiled successfully.
+
+File sizes after gzip:
+
+  77.24 KB  build/static/js/2.43ca3586.chunk.js
+  1.81 KB   build/static/js/main.0d353896.chunk.js
+  781 B     build/static/js/runtime-main.223e45fb.js
+  235 B     build/static/css/main.eaa5d75e.chunk.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+Removing intermediate container f51c0e2590bf
+ ---> f4e653a1d80a
+Step 9/9 : CMD ["serve", "-s", "-l", "5000", "build"]
+ ---> Running in c37c64208bcc
+Removing intermediate container c37c64208bcc
+ ---> 3de64582c797
+Successfully built 3de64582c797
+Successfully tagged frontend:latest
+arto@linux-arto:~/Desktop/Koodaukset/docker/docker_submissions/1.14/frontend$ docker run -p 5000:5000 frontend
+INFO: Accepting connections at http://localhost:5000
