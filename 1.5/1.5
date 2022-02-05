@@ -1,0 +1,59 @@
+arto@linux-arto:~$ docker pull devopsdockeruh/simple-web-service:ubuntu
+ubuntu: Pulling from devopsdockeruh/simple-web-service
+5d3b2c2d21bb: Pull complete 
+3fc2062ea667: Pull complete 
+75adf526d75b: Pull complete 
+965d4bbb586a: Pull complete 
+4f4fb700ef54: Pull complete 
+Digest: sha256:d44e1dce398732e18c7c2bad9416a072f719af33498302b02929d4c112e88d2a
+Status: Downloaded newer image for devopsdockeruh/simple-web-service:ubuntu
+docker.io/devopsdockeruh/simple-web-service:ubuntu
+arto@linux-arto:~$ docker pull devopsdockeruh/simple-web-service:alpine
+alpine: Pulling from devopsdockeruh/simple-web-service
+ba3557a56b15: Pull complete 
+1dace236434b: Pull complete 
+4f4fb700ef54: Pull complete 
+Digest: sha256:dd4d367476f86b7d7579d3379fe446ae5dfce25480903fb0966fc2e5257e0543
+Status: Downloaded newer image for devopsdockeruh/simple-web-service:alpine
+docker.io/devopsdockeruh/simple-web-service:alpine
+arto@linux-arto:~$ docker images
+REPOSITORY                          TAG       IMAGE ID       CREATED         SIZE
+devopsdockeruh/simple-web-service   ubuntu    4e3362e907d5   10 months ago   83MB
+devopsdockeruh/simple-web-service   alpine    fd312adc88e0   10 months ago   15.7MB
+
+With ubuntu tag: 83MB
+With alpine tag: 15.7MB
+
+arto@linux-arto:~$ docker run -d --name alpine fd
+17ce599279995485ac4ab6a23c3055a79987e2cf697170db68327c66961905b1
+arto@linux-arto:~$ docker attach alpine
+Wrote text to /usr/src/app/text.log
+Wrote text to /usr/src/app/text.log
+^Carto@linux-arto:~$ docker start alpine
+alpine
+arto@linux-arto:~$ docker exec alpine sh -c 'cat /usr/src/app/text.log'
+2022-02-05 09:12:35 +0000 UTC
+2022-02-05 09:12:37 +0000 UTC
+2022-02-05 09:12:39 +0000 UTC
+2022-02-05 09:12:41 +0000 UTC
+2022-02-05 09:12:43 +0000 UTC
+2022-02-05 09:12:48 +0000 UTC
+2022-02-05 09:12:50 +0000 UTC
+2022-02-05 09:12:52 +0000 UTC
+2022-02-05 09:12:54 +0000 UTC
+arto@linux-arto:~$ docker exec alpine sh -c 'cat /usr/src/app/text.log'
+2022-02-05 09:12:35 +0000 UTC
+2022-02-05 09:12:37 +0000 UTC
+2022-02-05 09:12:39 +0000 UTC
+2022-02-05 09:12:41 +0000 UTC
+2022-02-05 09:12:43 +0000 UTC
+2022-02-05 09:12:48 +0000 UTC
+2022-02-05 09:12:50 +0000 UTC
+2022-02-05 09:12:52 +0000 UTC
+2022-02-05 09:12:54 +0000 UTC
+2022-02-05 09:12:56 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2022-02-05 09:12:58 +0000 UTC
+2022-02-05 09:13:00 +0000 UTC
+arto@linux-arto:~$ 
+
