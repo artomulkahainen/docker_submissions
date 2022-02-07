@@ -4,7 +4,6 @@ services:
 
     simple-web-service:
       image: devopsdockeruh/simple-web-service
-      build: .
       volumes:
-        - .:./logs.log
-      container_name: youtube-dl
+        - ./text.log:/usr/src/app/text.log
+      container_name: simple-web-service
